@@ -8,7 +8,7 @@
 	* [최대한 자연어에 가깝게](#최대한-자연어에-가깝게)
 	* [축약어를 최대한 배제](#축약어를-최대한-배제)
 * [띄어쓰기](#띄어쓰기)
-    * [탭 대신 네 칸의 공백으로](#탭-대신-네-칸의-공백으로)
+    * [Tab 대신 4칸의 Space로](#tab-대신-4칸의-space로)
     * [메소드 공백](#메소드-공백)
     * [프로퍼티 공백](#프로퍼티-공백)
     * [if/else, switch/case, for, while](#if/else,-switch/case,-for,-while)
@@ -16,12 +16,12 @@
 * [코드의 순서](#코드의-순서)
     * [헤더파일 내용의 기본적인 순서](#헤더파일-내용의-기본적인-순서)
     * [구현파일 내용의 기본적인 순서](#구현파일-내용의-기본적인-순서)
-    * [UIViewController SubClasses](#UIViewController-SubClasses)
-* [파트 별 설명](#파트-별-설명)
-* [단축표현법](#단축표현법)
+    * [UIViewController 서브클래스](#uiviewcontroller-서브클래스)
+* [#pragma mark -](##pragma-mark--)
+* [Modern Objective-C Literals](#modern-objective-c-literals)
 * [파일 확장자](#파일-확장자)
-* [Class Prefix](#Class-Prefix)
-* [Define Preprocessor](#Define-Preprocessor)
+* [Class Prefix](#class-prefix)
+* [Define Preprocessor](#define-preprocessor)
 * [매크로 네이밍](#매크로-네이밍)
 * [변수 네이밍](#변수-네이밍)
 * [메소드 네이밍](#메소드-네이밍)
@@ -30,9 +30,9 @@
     * [파라미터 이름](#파라미터-이름)
 * [데이터 타입](#데이터-타입)
     * [BOOL](#BOOL)
-    * [Some Primitive Types](#Some-Primitive-Types)
-    * [Enums](#Enums)
-    * [Notification](#Notification)
+    * [Some Primitive Types](#some-primitive-types)
+    * [Enums](#enums)
+    * [Notification](#notification)
 * [같이 보기](#같이-보기)
 
 
@@ -79,7 +79,7 @@
 
 ## 띄어쓰기
 
-* #####탭 대신 네 칸의 공백으로
+* #####Tab 대신 4칸의 Space로
 
  Xcode의 `Preferences` 메뉴에서 `Text Editing` -> `Indentation` 탭을 선택하면 Tab 키를 누를 때의 동작을 선택할 수 있습니다. *Indent in leading whitespace*가 기본값이므로, 기본값 상태에서 Tab 키를 누르면 자동으로 탭 문자 대신 스페이스 4칸이 들어갑니다.
 
@@ -547,7 +547,7 @@
  7. @end
 
 
-* ##### UIViewController SubClasses
+* ##### UIViewController 서브클래스
 
  1. NSObject 멤버 메소드의 오버라이딩을 가장 위에 배치합니다.
     - `- (id)init`, `- (void)dealloc` 등
@@ -559,7 +559,7 @@
  6. Private Methods
 
 
-## 파트 별 설명
+## #pragma mark -
 
 - 한 클래스 내의 메소드들을 일정한 카테고리들로 묶을 수 있다면, 해당되는 메소드들을 최대한 가까이 모으고 메소드들의 바로 위에
 	```objc
@@ -570,7 +570,7 @@
 - 헤더`.h`와 구현부`.m`에 모두 달아주는 것을 권장합니다.
 
 
-## 단축표현법
+## Modern Objective-C Literals
 
  Modern Objective-C Literals는 Apple LLVM Compiler 4.0부터 지원하기 시작한 Objective-C의 새로운 문법입니다. NSNumber와 NSArray, NSDictionary 등의 문법을 `@`로 시작하는 표현들과 JSON 스타일의 `[]`, `{:}` 등을 이용하는 문법으로 대체함으로써, 작성할 때와 읽을 때 모두 획기적으로 간결해졌다는 것이 특징입니다.
 
@@ -677,7 +677,7 @@ static const NSUInteger NMSMainViewControllerShopNameMaxLine = 3;
 
 - 매크로의 이름을 정의할 때는
   - 모두 대문자 UPPERCASE로 합니다.
-
+  - 단어의 사이는 underscore`_`로 연결합니다.
     **Good:**
     ```objc
     #define CC_STRONG
@@ -686,7 +686,6 @@ static const NSUInteger NMSMainViewControllerShopNameMaxLine = 3;
     ```objc
     #define CCStrong
     ```
-  - 단어의 사이는 underscore`_`로 연결합니다.
   - [Class Prefix](#Class-Prefix)와 같은 규칙을 적용하여 Prefix를 붙입니다. Prefix와 다음 단어들과는 underscore`_`로 연결합니다. 이는 위 항목의 방식과 동일합니다.
 
     ```objc
