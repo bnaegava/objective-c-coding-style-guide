@@ -14,11 +14,25 @@
     * [if/else, switch/case, for, while](#if/else,-switch/case,-for,-while)
     * [클래스 / 프로토콜 헤더 정의 시](#클래스-/-프로토콜-헤더-정의-시)
 * [코드의 순서](#코드의-순서)
-    * [헤더의 기본적인 순서](#헤더의-기본적인-순서)
-    * [구현의 기본적인 순서](#구현의-기본적인-순서)
+    * [헤더파일 내용의 기본적인 순서](#헤더파일-내용의-기본적인-순서)
+    * [구현파일 내용의 기본적인 순서](#구현파일-내용의-기본적인-순서)
     * [UIViewController SubClasses](#UIViewController-SubClasses)
 * [파트 별 설명](#파트-별-설명)
 * [단축표현법](#단축표현법)
+* [파일 확장자](#파일-확장자)
+* [Class Prefix](#Class-Prefix)
+* [Define Preprocessor](#Define-Preprocessor)
+* [매크로 네이밍](#매크로-네이밍)
+* [변수 네이밍](#변수-네이밍)
+* [메소드 네이밍](#메소드-네이밍)
+    * [Accesor Methods](#Accesor-Methods)
+    * [델리게이트 메소드](#델리게이트-메소드)
+    * [파라미터 이름](#파라미터-이름)
+* [데이터 타입](#데이터-타입)
+    * [BOOL](#BOOL)
+    * [Some Primitive Types](#Some-Primitive-Types)
+    * [Enums](#Enums)
+    * [Notification](#Notification)
 * [같이 보기](#같이-보기)
 
 
@@ -35,13 +49,13 @@
 
 * #####축약어를 최대한 배제
 
- **Good**
+ **Good:**
  ```objc
  UITextField *nameTextField;
  WriteViewController *writeViewController;
  - (void)invokeMethod:(selector)aMethod;
  ```
- **Bad**
+ **Bad:**
  ```objc
  UITextField *nameTF;  // Textfield? TaskForce?
  WriteViewController *writeVC; // writeVirtualController?
@@ -58,7 +72,7 @@
 
  등은 축약어를 써도 가독성에 무리가 적거나, 축약어가 필요한 경우입니다.
 
- **SEE ALSO**:
+ **SEE ALSO:**
  * [Coding Guidelines for Cocoa - Code Naming Basics](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingBasics.html)
  * 예외의 예시는 [Coding Guidelines for Cocoa - Acceptable Abbreviations and Acronyms](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/APIAbbreviations.html)를 참고 바랍니다.
 
@@ -72,13 +86,13 @@
 * #####메소드 공백
  - **클래스 지정자(`-`/`+`) 뒤에는 Space 한 칸이 붙습니다.**
 
-    **Good**
+    **Good:**
 
 	```objc
 	- (void)methodName:(NSString *)nameString
 	```
 
-    **Not Good**
+    **Not Good:**
 
 	```objc
 	-(void)methodName:(NSString *)nameString
@@ -86,13 +100,13 @@
 
  - **반환 타입(```BOOL```, ```NSObject``` 등) 뒤에는 Space가 붙지 않습니다.**
 
-    **Good**
+    **Good:**
 
 	```objc
 	- (void)methodName:(NSString *)nameString
 	```
 
-    **Not Good**
+    **Not Good:**
 
 	```objc
 	-(void)methodName:(NSString *)nameString
@@ -100,19 +114,19 @@
 
  - **`메소드 이름`과 `첫 파라미터의 타입`, 그리고 `파라미터 이름` 앞에는 Space가 붙지 않습니다. **
 
-    **Good**
+    **Good:**
 
 	```objc
 	- (void)methodName:(NSString *)nameString
 	```
 
-	**Not Good**
+	**Not Good:**
 
 	```objc
 	- (void)methodName: (NSString *)nameString
 	```
 
-	**Not Good**
+	**Not Good:**
 
 	```objc
 	- (void)methodName:(NSString *) nameString
@@ -120,7 +134,7 @@
 
  - **메소드 파라미터들 사이에는 Space 한 칸을 띄워줍니다.** 
 
-    **Recommended**
+    **Recommended:**
 
 	```objc
 	- (void)methodName:(NSString *)nameString infoArray:(NSArray *)infoArray
@@ -128,7 +142,7 @@
 
    파라미터 이름이 너무 길거나 파라미터 개수가 3개 이상이라 가독성에 지장을 줄 가능성이 높은 경우에는 파라미터들을 개행으로 구분하는 것을 권장합니다.
 
-	**Recommended**
+	**Recommended:**
 
 	```objc
 	- (void)methodWithString:(NSString *)aNameString
@@ -141,7 +155,7 @@
 
 	이 점은 메세지를 보낼 때(메소드를 사용할 때)에도 마찬가지입니다.
 
-	**Recommended**
+	**Recommended:**
 
 	```objc
 	[object methodWithString:myName
@@ -151,7 +165,7 @@
 
  - **메소드 블라켓의 시작`{`은 메소드 선언 바로 아래줄에 들어갑니다.**
 
-	**Good**
+	**Good:**
 
 	```objc
 	- (void)methodName:(NSString *)nameString
@@ -160,7 +174,7 @@
 	}
 	```
 
-	**Not Good**
+	**Not Good:**
 
 	```objc
 	- (void)methodName:(NSString *)nameString {
@@ -170,7 +184,7 @@
 
 	파라미터들을 개행으로 구분했다면, 블라켓은 반드시 다음 줄에서 시작해야 합니다.
 
-	**Bad**
+	**Bad:**
 
 	```objc
 	- (void)methodWithString:(NSString *)nameString
@@ -182,7 +196,7 @@
 
   - **블라켓의 끝`}`은 메소드가 끝나는 바로 아래에 위치합니다.**
 
-	**Good**
+	**Good:**
 
 	```objc
 	- (void)methodName:(NSString *)nameString
@@ -191,7 +205,7 @@
 	}
 	```
 
-	**Bad**
+	**Bad:**
 
 	```objc
 	- (void)methodName:(NSString *)nameString
@@ -203,7 +217,7 @@
 
    이는 메소드와 메소드 사이의 구분을 좀 더 쉽게 하기 위함입니다.
 
-	**Good**
+	**Good:**
 
     ```objc
     - (id)alloc
@@ -219,7 +233,7 @@
 	}
 	```
 
-    **Not Good**
+    **Not Good:**
 
 	```objc
 	- (id)alloc
@@ -234,7 +248,7 @@
 	}
 	```
 
-    **Bad**
+    **Bad:**
 
 	```objc
 	- (id)alloc
@@ -250,13 +264,13 @@
 
 * #####프로퍼티 공백
 
- - **기본적인 문법**
+     **기본적인 문법:**
 
 	```objc
 	@property (nonatomic, getter=isEditable) BOOL editable;
 	```
 
- - **Not Good**
+     **Not Good:**
 
 	```objc
 	// @property와 옵션들을 지정하는 블라켓()이 붙어있음
@@ -342,7 +356,7 @@
  - 모든 `@~`선언은 앞뒤에 한 줄씩 비웁니다.
  - 프로퍼티, 메소드들 사이에는 카테고리를 구분하기 위해서만 빈 줄을 한 줄 넣습니다.
  - 주석은 설명하고자 하는 라인 바로 위에 달고, 주석과 대상 사이에 빈 줄을 넣지 않습니다.
- - **Example**
+    **Example**:
 	```objc
 	@import Foundation;
     #import "Currency.h"
@@ -381,7 +395,7 @@
 	```
 
 ## 코드의 순서
-* #####헤더의 기본적인 순서
+* ##### 헤더파일 내용의 기본적인 순서
   1. 클래스/파일에 대한 설명 (주석)
 	- Xcode가 자동적으로 생성하는 주석을 의도에 맞게 내용만 바꾸는 걸로도 충분합니다.
 	- 추가적으로 설명할 사항(라이센스 등)이 있으면, 바로 뒤에 기술합니다.
@@ -389,6 +403,14 @@
 	- `@import` (Framework Module)을 제일 먼저 기술합니다.
 	- `#include`와 `#import`할 파일들을 기술합니다.
 	- `#include`보다는 `#import`를 권장하는데, 이는 `#import`가 Header Guard를 하지 않아도 되는 편의성을 제공하기 때문입니다.
+	- **선언에만 필요한 클래스 선언은 `#import`로 하지 않고 `@class`로 합니다. 바로 아래 항목을 참고 바랍니다.**
+	 ```objc
+     @import Foundation;
+     @import CoreData;
+     @import UIKit;
+     #import "EXReferenced.h"
+     #import "TTTAttributedLabel.h"
+     ```
   3. `@class` 선언
 	- `@class` 선언은 해당 헤더를 통째로 읽어들이는 `#import`와 달리, 포인터에 불과합니다.
 	- `#import`를 통해서 헤더를 읽어야 하는 클래스는
@@ -396,22 +418,38 @@
 		- 해당 클래스가 기술하거나 참조해야 하는 *프로토콜*
 
 		정도이며, 나머지 선언을 위한 클래스 지정은 `@class`로 충분합니다.
+    - `@class`로 선언된 변수/인스턴스를 구현부`.m`에서 쓰려면, `.m`에서 `#import`를 사용하여 헤더를 읽어야 합니다.
+     **(.h)**
 
-	**SEE ALSO**
+      ```objc
+      @class CCScreenLayout, CCVideoUtility, CCImageProcess;
+      ```
+
+      **(.m)**
+      ```objc
+      #import "CCScreenLayout.h"
+      #import "CCVideoUtility.h"
+      #import "CCImageProcess.h"
+      ```
+
+	**SEE ALSO:**
 	 * `@class` 사용의 이점은 컴파일/링크 시점에서 도드라집니다. 이에 대한 [Apple의 설명](https://developer.apple.com/legacy/library/documentation/Cocoa/Conceptual/OOPandObjC1/OOPandObjC1.pdf)이 있습니다. 해당 링크의 31페이지를 참조 바랍니다.
 
   4. 상수들
+
+   **(.h)**
 	```objc
-	// in header
 	extern NSString const * CCsomethingConstant;
-	// in implementation(.m)
+    ```
+   **(.m)**
+    ```objc
 	NSString const* CCStringConst = @"constant";
 	```
   5. typedef로 정의하는 타입들
 
 		```objc
 	typedef NSUInteger Dollar;
-	NS_ENUM (NSInteger, SpendType) {
+	typedef NS_ENUM (NSInteger, SpendType) {
 		SpendTypeBill,
 		SpendTypeCreditCard,
 		SpendTypeDebitCard,
@@ -438,6 +476,9 @@
    ```objc
    @property (nonatomic, assign, getter=isFoo) BOOL foo;
    ```
+   - 바깥에서 접근해야 하는 변수들을 헤더에서 프로퍼티로 선언합니다.
+   - 인스턴스 변수를 꼭 선언해야 한다면, 헤더(`.h`)가 아닌 구현부(`.m`)에서 @protected나 @private로 선언합니다.
+   - **@public 인스턴스 변수는 절대 사용하지 않습니다.** (기본 상태는 @protected입니다.)
 
   9. 메소드 선언
    ```objc
@@ -447,14 +488,63 @@
   10. @end
 
 
-* ##### 구현의 기본적인 순서
+* ##### 구현파일 내용의 기본적인 순서
 
  1. 클래스/파일에 대한 설명
  2. `#import`들
- 3. const 상수 정의 `NSString * const CCsomethingConstant = @"com.ccushi.exam.constant.something";`
+     ```objc
+     #import "EXReferenced.h"
+     #import "TTTAttributedLabel.h"
+     ```
+ 3. const 상수 정의
+     ```objc
+     NSString * const CCsomethingConstant = @"com.ccushi.exam.constant.something";
+     ```
  4. Private Interface(property, method 등)을 빈 카테고리에 선언
- 5. Method 구현
- 6. @end
+    * 프로퍼티
+      * 클래스 내부변수들도 프로퍼티로서 정의합니다.
+
+        **DO**
+        ```objc
+        @interface MainViewController ()
+
+        @property (nonatomic) NSUInteger barrelMinAmount;
+        @property (nonatomic) NSUInteger barrelMaxAmount;
+        @property (nonatomic) NSUInteger currentBarrelAmount;
+
+        - (BOOL)checkUserAccount;
+
+        @end
+
+        @implementation MainViewController
+        .
+        .
+        .
+        ```
+      * 기존 방법의 인스턴스 변수 선언은 하지 않습니다.
+
+        **DO NOT**
+        ```objc
+        @interface MainViewController ()
+        {
+        	NSUInteger barrentMinAmount;
+        	NSUInteger barrentMaxAmount;
+            NSUInteger currentBarrelAmount;
+        }
+        @end
+
+        @implementation MainViewController
+        .
+        .
+        .
+        ```
+ 5. @implementation
+
+    ```objc
+    @implementation MainViewController
+    ```
+ 6. Method 구현
+ 7. @end
 
 
 * ##### UIViewController SubClasses
@@ -471,8 +561,10 @@
 
 ## 파트 별 설명
 
-- 한 클래스 내의 메소드들을 일정한 카테고리들로 묶을 수 있다면, 해당되는 메소드들을 최대한 가까이 모으고 메소드들의 바로 위에  
-	```#pragma mark - 설명```  
+- 한 클래스 내의 메소드들을 일정한 카테고리들로 묶을 수 있다면, 해당되는 메소드들을 최대한 가까이 모으고 메소드들의 바로 위에
+	```objc
+    #pragma mark - 파트에 대한 설명
+    ```
 	을 달아줍니다.
 
 - 헤더`.h`와 구현부`.m`에 모두 달아주는 것을 권장합니다.
@@ -544,7 +636,17 @@
 	```
 
 
+## 파일 확장자
+  - Objective-C Class Header: `.h`
+  - Objective-C Class Implementation: `.m`
+  - Objective-C++ Class Implementation: `.mm`
+  - Pure C Class Header: `.h`
+  - Pure C Class Implementation: `.c`
+  - Pure C++ Class Implementation: `.cc`
+
+
 ## Class Prefix
+
 Prefix를 붙일 땐 기본적으로 두 가지 원칙에 따릅니다.
 
   - 다른 프로젝트에서도 쓸 수 있는 범용 클래스일 경우 `CCushi`를 줄인 `CC`를 사용
@@ -556,13 +658,90 @@ Prefix를 붙일 땐 기본적으로 두 가지 원칙에 따릅니다.
   Xcode에서는 프로젝트 생성 시 Class prefix를 지정할 수 있습니다. 물론 생성 후에도 변경 가능합니다. 프로젝트용 prefix를 지정하면 프로젝트 진행 중 새로운 클래스를 행성할 때마다 이름 란에 prefix가 기본적으로 붙어서 나오기 때문에 편합니다.
 
 
-## 파일 확장자
-  - Objective-C Class Header: `.h`
-  - Objective-C Class Implementation: `.m`
-  - Objective-C++ Class Implementation: `.mm`
-  - Pure C Class Header: `.h`
-  - Pure C Class Implementation: `.c`
-  - Pure C++ Class Implementation: `.cc`
+## Define Preprocessor
+일반적으로 #define 전처리기는 상수를 정의할 때는 쓰지 않습니다.
+
+**DO:**
+```objc
+static NSString * const NMSServiceDomain = @"https://nomadshop.biz";
+static const NSUInteger NMSMainViewControllerShopNameMaxLine = 3;
+```
+**DO NOT:**
+```objc
+#define NomadShopServiceDomain @"https://nomadshpo.biz"
+#define ShopNameMaxLine 3
+```
+
+
+## 매크로 네이밍
+
+- 매크로의 이름을 정의할 때는
+  - 모두 대문자 UPPERCASE로 합니다.
+
+    **Good:**
+    ```objc
+    #define CC_STRONG
+    ```
+    **Not Good:**
+    ```objc
+    #define CCStrong
+    ```
+  - 단어의 사이는 underscore`_`로 연결합니다.
+  - [Class Prefix](#Class-Prefix)와 같은 규칙을 적용하여 Prefix를 붙입니다. Prefix와 다음 단어들과는 underscore`_`로 연결합니다. 이는 위 항목의 방식과 동일합니다.
+
+    ```objc
+    #ifndef CC_STRONG
+    #if __has_feature(objc_arc)
+    #define CC_STRONG strong
+    #else
+    #define CC_STRONG retain
+    #endif
+    #endif
+    ```
+
+## 변수 네이밍
+
+> Long, descriptive method and variable names are good.
+>
+> [NYT Objective-C Style Guide](https://github.com/NYTimes/objective-c-style-guide#naming)
+
+모든 네이밍은 단어를 축약하지 않고 온전히 사용하는 것을 권장합니다. 이는 아래 나올 메소드 네이밍에서도 같지만, 변수에서 특히 요구됩니다.
+
+* [헝가리안 노테이션 Hungarian Notation](http://msdn.microsoft.com/en-us/library/aa378932%28VS.85%29.aspx)스타일의 Prefix를 쓰지 않습니다.
+
+    **DO:**
+    ```objc
+    int amount;
+    ```
+    **DO NOT:**
+    ```objc
+    int iAmount;
+    ```
+   현재 Xcode에서는 Code assist나 (⌘+왼클릭) 등으로 쉽게 변수의 타입을 알아볼 수 있습니다. 타입을 알리기 위해 굳이 축약된 기호를 prefix에 붙일 필요가 없습니다.
+
+* 타입을 명시해야 할 필요가 있는 변수에는 변수명 끝에 클래스 이름을 붙입니다. 이 때 클래스의 Prefix를 떼고 붙입니다.
+
+    **Good:**
+    ```objc
+    NSArray *dockArray;
+    NSDictionary *metadataDictionary;
+    NSInteger priceIntegerValue;
+
+    UITextField *passwordTextField;
+    UIImageView *birdImageView;
+    ```
+    **Bad:**
+    ```objc
+    NSArray *arrDock;
+    NSArray *dockArr;
+    NSArray *dockNSArray;
+    NSArray *dicMetadata;
+    NSArray *MetadataNSDictionary;
+    NSInteger iPrice;
+
+    UITextField *pwTF;
+    UIImageView *birdIV;
+    ```
 
 
 ## 메소드 네이밍
@@ -574,6 +753,8 @@ Apple에서는 [메소드 이름 짓는 법](https://developer.apple.com/library
 	fontFromLabel: // Good
 	CCFontFromLabel: // bad
 	```
+
+* 특히, 맨 앞에 underscore`_`를 붙이지 않습니다. Cocoa Framework가 대부분의 private methods를 `_`로 시작하는 네이밍을 사용하기 때문에, 이는 사실상 애플의 예약어라고 생각하면 되겠습니다.
 
 * 결과값을 돌려주는 게 목적인 메소드는 결과값의 이름을 메소드의 이름으로 합니다. `calc`, `get` 등은 불필요하므로 사용하지 않습니다.
 
@@ -588,8 +769,8 @@ Apple에서는 [메소드 이름 짓는 법](https://developer.apple.com/library
 	```objc
 	- (NSInteger)arrangeLayoutInRect:(CGRect)rect // Good
 	- (NSInteger)arrangeLayout:(CGRect)rect // Bad
-	```		
-	
+	```
+
 - 모든 파라미터들은 `:` 앞에 파라미터의 설명이 있어야 합니다.
 
 	```objc
@@ -600,7 +781,7 @@ Apple에서는 [메소드 이름 짓는 법](https://developer.apple.com/library
 - `Do`나 `Does`는 `Will`이나 `Can`와 달리 메소드의 의미를 명확히 하는 데 도움이 되지 않습니다. 따라서 `Do`나 `Does`는 메소드 이름에 쓰지 않습니다. 이는 애플의 가이드라인에 반복적으로 등장합니다.
 
 
-### Accesor Methods (Getter / Setter)
+### Accesor Methods
 - 프로퍼티 @property를 지정하면 LLVM 컴파일러가 자동으로 지정자를 생성합니다.
 
 	```objc
@@ -622,7 +803,7 @@ Apple에서는 [메소드 이름 짓는 법](https://developer.apple.com/library
 	flag = [self isSuspended]; // suspend된 상태 여부를 원하는 것임이 분명함
 	```
 
-	Getter를 지정하는 예시
+	**Getter를 지정하는 예시:**
 
 	```objc
 	@property (nonatomic, readonly, getter=isSuspended) BOOL suspended;
@@ -631,8 +812,8 @@ Apple에서는 [메소드 이름 짓는 법](https://developer.apple.com/library
 - Setter는 일반적인 LLVM 4.0 이상의 Compiler로 컴파일 시 자동으로 생성되는 이름에 무리가 없기 때문에, 별다른 이름을 써서 선언하지 않는 것을 권장합니다.
 
 
-### 델리게이트 메소드 Delegate Methods
-델리깃(델리게이트) 메소드의 명명법은 [애플의 가이드라인](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-1001803-BCIDAIJE)을 그대로 따릅니다.
+### 델리게이트 메소드
+델리깃(델리게이트) 메소드 Delegate Methods의 명명법은 [애플의 가이드라인](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-1001803-BCIDAIJE)을 그대로 따릅니다.
 
 - 메소드의 이름은 메소드를 보내는 클래스의 이름부터 시작합니다.
 
@@ -704,14 +885,14 @@ Apple에서는 [메소드 이름 짓는 법](https://developer.apple.com/library
 ### BOOL
 - 타입 선언은 `BOOL`을 권장합니다.
 - 타 언어/플랫폼과의 이식성을 중요시한다면 `bool`을 권장합니다.
-	
-LLVM 4.0 컴파일러에서 하이라이팅되는 boolean 타입은 
 
-	- 일반적으로 쓰이는 C99 타입의 native `bool`과 `_Bool`
-	- Objc.h에 정의된 `BOOL`
-	- MacTypes.h에 정의된 `Boolean`
-	- boolean.h에 정의된 `boolean_t`
-	
+LLVM 4.0 컴파일러에서 하이라이팅되는 boolean 타입은
+
+    - 일반적으로 쓰이는 C99 타입의 native `bool`과 `_Bool`
+    - Objc.h에 정의된 `BOOL`
+    - MacTypes.h에 정의된 `Boolean`
+    - boolean.h에 정의된 `boolean_t`
+
 등이 있습니다.
 
 이들 중 소문자로 시작하는 camelCase의 변수명과 쉽게 구분되는 대문자 `BOOL`을 권장합니다.
@@ -720,7 +901,7 @@ LLVM 4.0 컴파일러에서 하이라이팅되는 boolean 타입은
 같은 이유로, Objective-C 스타일의 `YES / NO`, C 스타일의 `true / false` 사이에서도 같은 방법의 선택을 권장합니다.
 
 
-### Primitive Types
+### Some Primitive Types
 
 - int보다는 NSInteger를 권장합니다.
 - 다만 고정된 int 크기의 타입을 요할 시 int를 사용합니다.
@@ -749,9 +930,9 @@ LLVM 4.0 컴파일러에서 하이라이팅되는 boolean 타입은
 		CCProjectTypeOthersApp,
 	} CCProjectType; // unsigned int인지 long인지 확실하지 않음
 	```
-	
+
 	결국 좀 더 정확한 사용을 위해서는
-	
+
 	```objc
 	typedef enum CCProjectType : NSInteger
 	{
@@ -760,9 +941,9 @@ LLVM 4.0 컴파일러에서 하이라이팅되는 boolean 타입은
     	CCProjectTypeOthersApp,
 	} CCProjectType;
 	```
-	
+
 	혹은
-	
+
 	```objc
 	enum {
 		CCProjectTypeOurGame,
@@ -771,9 +952,9 @@ LLVM 4.0 컴파일러에서 하이라이팅되는 boolean 타입은
 	} CCProjectType;
 	typedef NSUInteger CCProjectType;
 	```
-	
+
 	과 같이 처리해야 하는데, 애플은 이에 대응하여
-	
+
 	```objc
 	typedef NS_ENUM(NSUInteger, CCProjectType) {
 		CCProjectTypeOurGame,
@@ -781,46 +962,46 @@ LLVM 4.0 컴파일러에서 하이라이팅되는 boolean 타입은
 		CCProjectTypeOthersApp,
 	};
 	```
-	
+
 	과 같이 쓸 수 있는 매크로를 iOS 6 / OS X 10.8을 발표하면서 추가하였습니다.
 	첫 줄에 enum의 타입명과 실제 타입이 명시되기 때문에, 코딩의 편의성과 가독성을 모두 잡는 방법입니다.
-	
 
-- 타입의 형식은 
 
-```objc
-[Class Prefix]+[TypeName]
-```
-으로, 
+- 타입의 형식은
+
+  ```objc
+  [Class Prefix]+[TypeName]
+  ```
+으로,
 
 - 값의 형식은
 
-```objc
-[Class Prefix]+[TypeName]+[ValueName]
-```
+  ```objc
+  [Class Prefix]+[TypeName]+[ValueName]
+  ```
 으로 합니다.
 
-예)
-
-```objc
-NS_ENUM (NSInteger, CCSpendType) { 
-		CCSpendTypeBill,
-		CCSpendTypeCreditCard,
-		CCSpendTypeDebitCard,
-	};
-```
+ **Example:**
+  ```objc
+  NS_ENUM (NSInteger, CCSpendType) { 
+      CCSpendTypeBill,
+      CCSpendTypeCreditCard,
+      CCSpendTypeDebitCard,
+  };
+  ```
 
 
 ### Notification
+
 Notification은 전역 NSString 상수로 정의합니다.
 
-(in .h)
+**(in .h)**
 
 ```objc
 extern NSString * const NMSProductDidAddNotification;
 ```
 
-(in .m)
+**(in .m)**
 
 ```objc
 NSString * const NMSProductDidAddNotification = @"com.nomadstar.nomadshop.product.added";
@@ -834,7 +1015,7 @@ NSString * const NMSProductDidAddNotification = @"com.nomadstar.nomadshop.produc
 ```
 
 
-예)
+**Example:**
 
 [Name of associated class]`NMSProduct`
 [Did | Will]`Did`
@@ -845,12 +1026,12 @@ NSString * const NMSProductDidAddNotification = @"com.nomadstar.nomadshop.produc
 Notification의 내부 값은 Reverse domain name notation을 따릅니다.
 글자들은 모두 소문자lowercase로 표기합니다.
 
-규칙)
+**규칙:**
 ```objc
 com.[ccushi | (Client's name)].[ProjectName].[Name of associated class].[UniquePartOfName]
 ```
 
-예)
+**Example:**
 ```objc
 NSString * const AODSailDataParserDidParseNotification = @"com.ccushi.aod.saildataparser.completeparsing";
 ```
