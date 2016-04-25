@@ -109,7 +109,7 @@
     **Not Good:**
 
 	```objc
-	-(void)methodName:(NSString *)nameString
+	-(void) methodName:(NSString *)nameString
 	```
 
  - **`메소드 이름`과 `첫 파라미터의 타입`, 그리고 `파라미터 이름` 앞에는 Space가 붙지 않습니다. **
